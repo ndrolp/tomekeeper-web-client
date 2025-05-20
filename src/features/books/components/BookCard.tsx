@@ -12,8 +12,9 @@ export const BookCard = () => {
         />
       </CardHeader>
       <CardContent className="p-2 border-t">
-        <p className="text-md">Mistborn</p>
-        <p className="text-gray-500 text-xs">Brandon Sanderson</p>
+        <p className="text-lg">El imperio final</p>
+        <p className="text-gray-500 text-sm">Brandon Sanderson</p>
+        <p className="text-xs text-gray-500">Mistborn</p>
       </CardContent>
     </Card>
   );
