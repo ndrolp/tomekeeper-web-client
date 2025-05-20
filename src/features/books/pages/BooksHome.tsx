@@ -9,8 +9,19 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
+import useAxios from "@/common/hooks/useAxios";
+import { useEffect } from "react";
 
 export const BooksHome = () => {
+  const axios = useAxios();
+
+  useEffect(() => {
+    if (axios)
+      axios.get("/books").then((res) => {
+        console.table(res.data);
+      });
+  }, [axios]);
+
   return (
     <div className="flex w-full">
       <div className="w-full">
