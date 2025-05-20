@@ -1,16 +1,17 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import placeholder from "@/assets/images/placeholder.svg";
 import { Badge } from "@/components/ui/badge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Image } from "lucide-react";
 
 export const BookCard = () => {
   return (
-    <Card className="p-0 gap-0">
+    <Card className="p-0 gap-0 overflow-hidden cursor-pointer">
       <CardHeader className="p-0 m-0 mb-0 gap-0">
-        <img
-          className="rounded-t-lg"
-          style={{ width: "100%", aspectRatio: "2/3", objectFit: "cover" }}
-          src={placeholder}
-        />
+        <AspectRatio className="bg-muted rounded-t-lg" ratio={2 / 3}>
+          <div className="h-full w-full grid place-items-center">
+            <Image size={64} className="text-gray-400 opacity-30" />
+          </div>
+        </AspectRatio>
       </CardHeader>
       <CardContent className="p-2 border-t">
         <p className="text-lg">El imperio final</p>

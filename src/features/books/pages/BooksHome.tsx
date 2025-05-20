@@ -1,4 +1,4 @@
-import { ArrowDownAz, Grid2x2, List } from "lucide-react";
+import { ArrowDownAz, BookPlus, Grid3x3, List } from "lucide-react";
 import { BooksGrid } from "../components/BooksGrid";
 import {
   Select,
@@ -11,6 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
 import useAxios from "@/common/hooks/useAxios";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export const BooksHome = () => {
   const axios = useAxios();
@@ -26,7 +27,12 @@ export const BooksHome = () => {
     <div className="flex w-full">
       <div className="w-full">
         <div className="flex w-full mb-4 items-center justify-between">
-          <p className="text-xl font-bold">Your Library</p>
+          <div className="flex items-center gap-4">
+            <p className="text-xl font-bold">Your Library</p>
+            <Button variant="outline">
+              <BookPlus />
+            </Button>
+          </div>
           <div className="flex align-end items-center gap-2">
             <Input
               className="w-full"
@@ -39,7 +45,7 @@ export const BooksHome = () => {
               className=""
             >
               <ToggleGroupItem value="grid" aria-label="Toggle bold">
-                <Grid2x2 className="h-4 w-4" />
+                <Grid3x3 className="h-4 w-4" />
               </ToggleGroupItem>
               <ToggleGroupItem value="list" aria-label="Toggle list">
                 <List className="h-4 w-4" />
