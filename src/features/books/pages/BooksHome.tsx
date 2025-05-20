@@ -8,14 +8,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Input } from "@/components/ui/input";
 
 export const BooksHome = () => {
   return (
     <div className="flex w-full">
       <div className="w-full">
-        <div className="flex w-full mb-3 items-center justify-between">
+        <div className="flex w-full mb-4 items-center justify-between">
           <p className="text-xl font-bold">Your Library</p>
           <div className="flex align-end items-center gap-2">
+            <Input
+              className="w-full"
+              placeholder="Filter by title, author, or ISBN..."
+            />
             <ToggleGroup
               value={"grid"}
               type="single"
