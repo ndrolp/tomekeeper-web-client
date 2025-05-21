@@ -10,8 +10,15 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { DataSource } from "@/common/data/Datasource";
 
 export const BooksHome = () => {
+  const query = useQuery({
+    queryKey: ["books"],
+    queryFn: DataSource.Books.getBooks,
+  });
+
   return (
     <div className="flex w-full">
       <div className="w-full">
@@ -53,7 +60,7 @@ export const BooksHome = () => {
             </Select>
           </div>
         </div>
-        <BooksGrid />
+        <BooksGrid books={query.data} />
       </div>
       <aside className="w-full border-l ml-4 bg-background md:w-[340px] px-4">
         <p className="font-bold text-lg">Filters</p>

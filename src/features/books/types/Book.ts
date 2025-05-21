@@ -13,5 +13,7 @@ export interface Book {
 
   language?: string;
 
+  series?: string;
+
   seriesOrder?: number;
 }

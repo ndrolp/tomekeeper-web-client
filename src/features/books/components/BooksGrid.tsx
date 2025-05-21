@@ -1,18 +1,12 @@
+import { type Book } from "@/features/books/types/Book";
 import { BookCard } from "./BookCard";
 
-export const BooksGrid = () => {
+export const BooksGrid = ({ books = [] }: { books?: Book[] }) => {
   return (
     <div className="grid grid-cols-6 gap-4 w-full">
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
-      <BookCard />
+      {books.map((book, index) => {
+        return <BookCard key={index} book={book} />;
+      })}
     </div>
   );
 };
