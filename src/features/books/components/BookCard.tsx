@@ -29,7 +29,7 @@ export const BookCard = ({ book }: { book: Book }) => {
           <Badge variant="outline" className="text-gray-500">
             No Leido
           </Badge>
-          <p className="text-xs text-gray-500">Español</p>
+          <p className="text-xs text-gray-500">{book.language}</p>
         </div>
       </CardFooter>
     </Card>

@@ -1,5 +1,5 @@
 export interface Book {
-  id: number;
+  id?: number;
 
   title: string;
 
@@ -7,7 +7,7 @@ export interface Book {
 
   genre?: string;
 
-  publicationYear?: number;
+  publicationYear?: number | string;
 
   description?: string;
 
@@ -15,5 +15,21 @@ export interface Book {
 
   series?: string;
 
+  seriesOrder?: number | string;
+}
+
+export interface BookCreationDTO {
+  id?: number;
+  title: string;
+  author?: string;
+  genre?: string;
+  publicationYear?: number;
+  description?: string;
+  language?: string;
+  serie?: {
+    id?: number;
+    name: string;
+    description?: string;
+  };
   seriesOrder?: number;
 }

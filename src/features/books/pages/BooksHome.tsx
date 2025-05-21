@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
+import { BookForm } from "../components/BookForm";
 
 export const BooksHome = () => {
   const query = useQuery({
@@ -25,9 +26,11 @@ export const BooksHome = () => {
         <div className="flex w-full mb-4 items-center justify-between">
           <div className="flex items-center gap-4">
             <p className="text-xl font-bold">Your Library</p>
-            <Button variant="outline">
-              <BookPlus />
-            </Button>
+            <BookForm>
+              <Button variant="outline">
+                <BookPlus />
+              </Button>
+            </BookForm>
           </div>
           <div className="flex align-end items-center gap-2">
             <Input
