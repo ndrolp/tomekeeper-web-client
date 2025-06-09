@@ -1,4 +1,10 @@
-import { Library, BookCopy, Quote, LibraryBig } from "lucide-react";
+import {
+  Library,
+  BookCopy,
+  Quote,
+  LibraryBig,
+  type LucideProps,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -11,8 +17,17 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { DataSource } from "../data/Datasource";
 
-const items = [
+const items: {
+  title: string;
+  url: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  countPos?: "books";
+}[] = [
   {
     title: "Home",
     url: "/",
@@ -22,6 +37,7 @@ const items = [
     title: "Books",
     url: "/books",
     icon: BookCopy,
+    countPos: "books",
   },
   {
     title: "Series",
@@ -37,6 +53,12 @@ const items = [
 
 export function AppSidebar() {
   const navigate = useNavigate();
+
+  const countsQuery = useQuery({
+    queryKey: ["extras/counts"],
+    queryFn: DataSource.Extras.getCounts,
+  });
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -56,6 +78,13 @@ export function AppSidebar() {
                     >
                       <item.icon />
                       <span>{item.title}</span>
+                      {item.countPos && countsQuery.data ? (
+                        <span className="ml-auto text-xs opacity-60 p-2">
+                          {countsQuery.data[item.countPos]}
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
