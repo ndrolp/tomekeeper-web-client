@@ -7,7 +7,7 @@ export const BaseLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-full relative">
+      <main className="w-full  relative flex flex-col ">
         <div className="border-b flex p-3 items-center justify-between w-full">
           <div className="gap-2 flex">
             <SidebarTrigger />
@@ -15,7 +15,7 @@ export const BaseLayout = () => {
           </div>
           <ThemeToggle />
         </div>
-        <div className="p-4">
+        <div className="p-4 ">
           <Outlet />
         </div>
       </main>

@@ -53,9 +53,9 @@ export const BooksHome = () => {
   });
 
   return (
-    <div className="flex w-full">
-      <div className="w-full">
-        <div className="mb-4 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between">
+    <div className="flex w-full relative">
+      <div className="w-full ">
+        <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-0 top-0 sticky z-100 bg-background ">
           <div className="flex items-center gap-4 w-full mb-4 md:mb-0 pb-3 md:border-none md:pb-0">
             <p className="text-xl font-bold">Your Library</p>
             <div className="flex gap-2 ml-auto md:ml-0">
@@ -69,7 +69,7 @@ export const BooksHome = () => {
               </Button>
             </div>
           </div>
-          <div className="flex-row align-end md:w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 w-full ">
+          <div className="flex-row align-end md:w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 w-full">
             <ToggleGroup
               value={viewType}
               type="single"
@@ -136,13 +136,15 @@ export const BooksHome = () => {
             placeholder="Filter by title, author, or ISBN..."
           />
         </div>
-        {viewType === "grid" ? (
-          <BooksGrid books={query.data} loading={query.isPending} />
-        ) : (
-          <BooksList books={query.data} loading={query.isPending} />
-        )}
+        <div className="">
+          {viewType === "grid" ? (
+            <BooksGrid books={query.data} loading={query.isPending} />
+          ) : (
+            <BooksList books={query.data} loading={query.isPending} />
+          )}
+        </div>
       </div>
-      <aside className="ml-4 hidden w-full border-l bg-background px-4 sticky md:block md:w-[340px]">
+      <aside className="ml-4 hidden w-full border-l bg-background px-4 md:block md:w-[340px] sticky top-0 right-0 ">
         <p className="text-lg font-bold">Filters</p>
         <div></div>
       </aside>
