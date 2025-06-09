@@ -32,15 +32,24 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import type { GetBooksSortOptions } from "../data/BooksDatasource";
+import { useDebounce } from "use-debounce";
 
 type ViewTypes = "grid" | "list";
 
 export const BooksHome = () => {
   const [viewType, setViewType] = useState<ViewTypes>("grid");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedQuery] = useDebounce(searchQuery, 300);
+  const [sort, setSort] = useState<GetBooksSortOptions>("title");
 
   const query = useQuery({
-    queryKey: ["books"],
-    queryFn: DataSource.Books.getBooks,
+    queryKey: ["books", { deb: debouncedQuery, sort }],
+    queryFn: async () =>
+      await DataSource.Books.getBooks({
+        query: debouncedQuery,
+        sort: sort,
+      }),
   });
 
   return (
@@ -79,7 +88,12 @@ export const BooksHome = () => {
             </ToggleGroup>
             <div className="flex items-center flex-1 gap-2">
               <ArrowDownAz className="text-gray-600" />
-              <Select value="title">
+              <Select
+                value={sort}
+                onValueChange={(value) => {
+                  setSort(value as GetBooksSortOptions);
+                }}
+              >
                 <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="Sort Order" />
                 </SelectTrigger>
@@ -113,15 +127,19 @@ export const BooksHome = () => {
             </Drawer>
           </div>
           <Input
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             type="search"
             className="w-full mt-1 md:mt-0 "
             placeholder="Filter by title, author, or ISBN..."
           />
         </div>
         {viewType === "grid" ? (
-          <BooksGrid books={query.data} />
+          <BooksGrid books={query.data} loading={query.isPending} />
         ) : (
-          <BooksList books={query.data} />
+          <BooksList books={query.data} loading={query.isPending} />
         )}
       </div>
       <aside className="ml-4 hidden w-full border-l bg-background px-4 sticky md:block md:w-[340px]">

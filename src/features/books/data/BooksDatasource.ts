@@ -3,8 +3,15 @@ import type { Book } from "../types/Book";
 import { BooksApiDataSource } from "./BooksApiDatasource";
 import { BooksInternalDataSource } from "./BooksInternalDatasource";
 
+export type GetBooksSortOptions = "title" | "author" | "series";
+
+export interface GetBooksOptions {
+  query?: string;
+  sort?: GetBooksSortOptions;
+}
+
 export abstract class BooksDataSource {
-  static async getBooks(): Promise<Book[]> {
+  static async getBooks(options: GetBooksOptions): Promise<Book[]> {
     throw NOT_IMPLEMENTED_ERROR;
   }
 

@@ -3,8 +3,8 @@ import type { BooksDataSource } from "./BooksDatasource";
 import type { Book, BookCreationDTO } from "../types/Book";
 
 export class BooksApiDataSource implements BooksDataSource {
-  static async getBooks(): Promise<Book[]> {
-    const data = await api.get<Book[]>("/books/");
+  static async getBooks({ query = "", sort = "" }): Promise<Book[]> {
+    const data = await api.get<Book[]>(`/books/?query=${query}&sort=${sort}`);
     return data.data;
   }
 
