@@ -1,6 +1,6 @@
 import { useAppForm } from "@/common/components/form";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Image } from "lucide-react";
+import { Image, ImageUp } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -59,7 +59,9 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                 <Image size={64} className="text-gray-400 opacity-30" />
               </div>
             </AspectRatio>
-            <Button className="mt-2 w-full">Upload Image</Button>
+            <Button className="mt-2 w-full cursor-pointer">
+              <ImageUp /> Upload Image
+            </Button>
           </div>
           <div className="w-full">
             <Tabs defaultValue="data" className="w-full">

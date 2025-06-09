@@ -7,8 +7,8 @@ export const BaseLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main style={{ width: "100%" }}>
-        <div className="border-b flex p-3 items-center justify-between">
+      <main className="w-full relative">
+        <div className="border-b flex p-3 items-center justify-between w-full">
           <div className="gap-2 flex">
             <SidebarTrigger />
             <h1>Tomekeeper</h1>

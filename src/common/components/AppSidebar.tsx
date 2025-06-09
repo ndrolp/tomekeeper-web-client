@@ -1,4 +1,4 @@
-import { Library, BookCopy } from "lucide-react";
+import { Library, BookCopy, Quote, LibraryBig } from "lucide-react";
 
 import {
   Sidebar,
@@ -22,6 +22,16 @@ const items = [
     title: "Books",
     url: "/books",
     icon: BookCopy,
+  },
+  {
+    title: "Series",
+    url: "/books",
+    icon: LibraryBig,
+  },
+  {
+    title: "Quotes",
+    url: "/books",
+    icon: Quote,
   },
 ];
 

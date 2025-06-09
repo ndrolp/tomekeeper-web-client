@@ -1,4 +1,5 @@
-import { ArrowDownAz, BookPlus, Grid3x3, List } from "lucide-react";
+//@ts-check
+import { ArrowDownAz, Barcode, BookPlus, Grid3x3, List } from "lucide-react";
 import { BooksGrid } from "../components/BooksGrid";
 import {
   Select,
@@ -23,20 +24,21 @@ export const BooksHome = () => {
   return (
     <div className="flex w-full">
       <div className="w-full">
-        <div className="flex w-full mb-4 items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="mb-4 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between">
+          <div className="flex items-center gap-4 md:w-full">
             <p className="text-xl font-bold">Your Library</p>
-            <BookForm>
+            <div className="flex gap-2">
+              <BookForm>
+                <Button variant="outline">
+                  <BookPlus />
+                </Button>
+              </BookForm>
               <Button variant="outline">
-                <BookPlus />
+                <Barcode />
               </Button>
-            </BookForm>
+            </div>
           </div>
-          <div className="flex align-end items-center gap-2">
-            <Input
-              className="w-full"
-              placeholder="Filter by title, author, or ISBN..."
-            />
+          <div className="flex-row align-end w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 ">
             <ToggleGroup
               value={"grid"}
               type="single"
@@ -62,11 +64,15 @@ export const BooksHome = () => {
               </SelectContent>
             </Select>
           </div>
+          <Input
+            className="w-full "
+            placeholder="Filter by title, author, or ISBN..."
+          />
         </div>
         <BooksGrid books={query.data} />
       </div>
-      <aside className="w-full border-l ml-4 bg-background md:w-[340px] px-4">
-        <p className="font-bold text-lg">Filters</p>
+      <aside className="ml-4 hidden w-full border-l bg-background px-4 md:block md:w-[340px]">
+        <p className="text-lg font-bold">Filters</p>
         <div></div>
       </aside>
     </div>
