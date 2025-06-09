@@ -53,7 +53,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
             form.handleSubmit();
           }}
         >
-          <div className="self-start h-full ">
+          <div className="self-start h-full hidden md:block">
             <AspectRatio className="bg-muted rounded-lg" ratio={2 / 3}>
               <div className="h-full w-full grid place-items-center">
                 <Image size={64} className="text-gray-400 opacity-30" />
@@ -69,6 +69,9 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                 <TabsTrigger value="data">Data</TabsTrigger>
                 <TabsTrigger value="series">Series</TabsTrigger>
                 <TabsTrigger value="editions">Editions</TabsTrigger>
+                <TabsTrigger className="md:hidden" value="cover">
+                  Cover
+                </TabsTrigger>
               </TabsList>
               <TabsContent className="space-y-3 w-full" value="data">
                 <form.AppField
@@ -181,6 +184,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                 />
               </TabsContent>
               <TabsContent value="editions"></TabsContent>
+              <TabsContent value="cover"></TabsContent>
             </Tabs>
           </div>
         </form>

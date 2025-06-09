@@ -1,5 +1,12 @@
 //@ts-check
-import { ArrowDownAz, Barcode, BookPlus, Grid3x3, List } from "lucide-react";
+import {
+  ArrowDownAz,
+  Barcode,
+  BookPlus,
+  Funnel,
+  Grid3x3,
+  List,
+} from "lucide-react";
 import { BooksGrid } from "../components/BooksGrid";
 import {
   Select,
@@ -16,6 +23,16 @@ import { DataSource } from "@/common/data/Datasource";
 import { BookForm } from "../components/BookForm";
 import { useState } from "react";
 import { BooksList } from "../components/BooksList";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 type ViewTypes = "grid" | "list";
 
@@ -31,9 +48,9 @@ export const BooksHome = () => {
     <div className="flex w-full">
       <div className="w-full">
         <div className="mb-4 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between">
-          <div className="flex items-center gap-4 md:w-full">
+          <div className="flex items-center gap-4 w-full mb-4 md:mb-0 pb-3 md:border-none md:pb-0">
             <p className="text-xl font-bold">Your Library</p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 ml-auto md:ml-0">
               <BookForm>
                 <Button variant="outline">
                   <BookPlus />
@@ -44,7 +61,7 @@ export const BooksHome = () => {
               </Button>
             </div>
           </div>
-          <div className="flex-row align-end w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 ">
+          <div className="flex-row align-end md:w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 w-full ">
             <ToggleGroup
               value={viewType}
               type="single"
@@ -61,20 +78,43 @@ export const BooksHome = () => {
                 <List className="h-4 w-4" />
               </ToggleGroupItem>
             </ToggleGroup>
-            <ArrowDownAz className="text-gray-600" />
-            <Select value="title">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort Order" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="title">Title</SelectItem>
-                <SelectItem value="author">Author</SelectItem>
-                <SelectItem value="series">Series</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center flex-1 gap-2">
+              <ArrowDownAz className="text-gray-600" />
+              <Select value="title">
+                <SelectTrigger className="w-full md:w-[180px]">
+                  <SelectValue placeholder="Sort Order" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="title">Title</SelectItem>
+                  <SelectItem value="author">Author</SelectItem>
+                  <SelectItem value="series">Series</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Drawer>
+              <DrawerTrigger className="md:hidden">
+                <Button variant="outline">
+                  <Funnel />
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="md:hidden">
+                <DrawerHeader>
+                  <DrawerTitle>Filters</DrawerTitle>
+                  <DrawerDescription>
+                    Apply filters to your search
+                  </DrawerDescription>
+                </DrawerHeader>
+                <DrawerFooter>
+                  <Button>Submit</Button>
+                  <DrawerClose>
+                    <Button variant="outline">Cancel</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
           </div>
           <Input
-            className="w-full "
+            className="w-full mt-1 md:mt-0 "
             placeholder="Filter by title, author, or ISBN..."
           />
         </div>
