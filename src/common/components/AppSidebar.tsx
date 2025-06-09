@@ -19,6 +19,7 @@ import {
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { DataSource } from "../data/Datasource";
+import { Badge } from "@/components/ui/badge";
 
 const items: {
   title: string;
@@ -68,7 +69,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="py-3">
                     <a
                       href={item.url}
                       onClick={(e) => {
@@ -79,9 +80,12 @@ export function AppSidebar() {
                       <item.icon />
                       <span>{item.title}</span>
                       {item.countPos && countsQuery.data ? (
-                        <span className="ml-auto text-xs opacity-60 p-2">
+                        <Badge
+                          variant="outline"
+                          className="ml-auto text-xs opacity-60"
+                        >
                           {countsQuery.data[item.countPos]}
-                        </span>
+                        </Badge>
                       ) : (
                         ""
                       )}

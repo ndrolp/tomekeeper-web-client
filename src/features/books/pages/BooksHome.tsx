@@ -55,7 +55,7 @@ export const BooksHome = () => {
   return (
     <div className="flex w-full relative">
       <div className="w-full ">
-        <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-0 top-0 sticky z-100 bg-background ">
+        <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-1 top-0 sticky z-10 bg-background ">
           <div className="flex items-center gap-4 w-full mb-4 md:mb-0 pb-3 md:border-none md:pb-0">
             <p className="text-xl font-bold">Your Library</p>
             <div className="flex gap-2 ml-auto md:ml-0">
@@ -87,7 +87,7 @@ export const BooksHome = () => {
               </ToggleGroupItem>
             </ToggleGroup>
             <div className="flex items-center flex-1 gap-2">
-              <ArrowDownAz className="text-gray-600" />
+              <ArrowDownAz className="opacity-40" />
               <Select
                 value={sort}
                 onValueChange={(value) => {
@@ -136,7 +136,7 @@ export const BooksHome = () => {
             placeholder="Filter by title, author, or ISBN..."
           />
         </div>
-        <div className="">
+        <div className="z-0">
           {viewType === "grid" ? (
             <BooksGrid books={query.data} loading={query.isPending} />
           ) : (

@@ -2,6 +2,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "../components/AppSidebar";
 import { Outlet } from "react-router";
 import { ThemeToggle } from "../components/ThemeToggle";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 
 export const BaseLayout = () => {
   return (
@@ -9,11 +11,21 @@ export const BaseLayout = () => {
       <AppSidebar />
       <main className="w-full  relative flex flex-col ">
         <div className="border-b flex p-3 items-center justify-between w-full">
-          <div className="gap-2 flex">
+          <div className="gap-2 flex items-center">
             <SidebarTrigger />
             <h1>Tomekeeper</h1>
           </div>
-          <ThemeToggle />
+          <div className="flex gap-2">
+            <Button
+              onClick={() => {
+                window.location.reload();
+              }}
+              variant="outline"
+            >
+              <RefreshCw />
+            </Button>
+            <ThemeToggle />
+          </div>
         </div>
         <div className="p-4 ">
           <Outlet />
