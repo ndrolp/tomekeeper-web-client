@@ -8,8 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { TabsContent, TabsList, Tabs, TabsTrigger } from "@/components/ui/tabs";
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Button } from "@/components/ui/button";
+import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
 
@@ -42,7 +42,12 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-200">
+      <DialogContent
+        className="sm:max-w-200"
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Register Book</DialogTitle>
         </DialogHeader>
@@ -136,6 +141,11 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                   )}
                 />
                 <div className="flex w-full space-x-2">
+                  <DialogClose
+                    className={buttonVariants({ variant: "outline" })}
+                  >
+                    Cancel
+                  </DialogClose>
                   <Button className="ml-auto" variant="outline">
                     Reset
                   </Button>
