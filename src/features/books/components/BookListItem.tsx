@@ -31,8 +31,12 @@ export const BookListItem = ({
 
   return (
     <div className="border flex p-2 rounded-lg gap-3 items-center">
-      <div className="w-15">
-        <BookCover placeholderImageSize={20} roundedType="rounded-lg" />
+      <div className="w-15 rounded-lg">
+        <BookCover
+          placeholderImageSize={20}
+          roundedType="rounded-lg"
+          coverUrl={book?.externalCoverUrl}
+        />
       </div>
       <div className="h-full ">
         <p className="mb-1">{book?.title}</p>

@@ -16,6 +16,8 @@ export interface Book {
   series?: string;
 
   seriesOrder?: number | string;
+
+  externalCoverUrl?: string;
 }
 
 export interface BookCreationDTO {

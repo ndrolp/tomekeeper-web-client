@@ -58,27 +58,17 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
             form.handleSubmit();
           }}
         >
-          <div className="self-start h-full hidden md:block">
-            <AspectRatio className="bg-muted rounded-lg" ratio={2 / 3}>
-              <div className="h-full w-full grid place-items-center">
-                <Image size={64} className="text-gray-400 opacity-30" />
-              </div>
-            </AspectRatio>
-            <Button className="mt-2 w-full cursor-pointer">
-              <ImageUp /> Upload Image
-            </Button>
-          </div>
           <div className="w-full">
             <Tabs defaultValue="data" className="w-full">
               <TabsList className="w-full">
                 <TabsTrigger value="data">Data</TabsTrigger>
                 <TabsTrigger value="series">Series</TabsTrigger>
                 <TabsTrigger value="editions">Editions</TabsTrigger>
-                <TabsTrigger className="md:hidden" value="cover">
+                <TabsTrigger className="" value="cover">
                   Cover
                 </TabsTrigger>
               </TabsList>
-              <TabsContent className="space-y-3 w-full" value="data">
+              <TabsContent className="space-y-3 w-full min-h-96" value="data">
                 <form.AppField
                   name="title"
                   children={(field) => (
@@ -99,7 +89,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                   <form.AppField
                     name="genre"
                     children={(field) => (
-                      <field.TextField label="Genre" placeholder="Book title" />
+                      <field.TextField label="Genre" placeholder="Book Genre" />
                     )}
                   />
                 </div>
@@ -120,43 +110,21 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                       <field.TextField
                         type="number"
                         label="Publication Year"
-                        placeholder="First Published Year"
+                        placeholder="Publication Year"
                       />
                     )}
                   />
                 </div>
                 <form.AppField
-                  name="externalCover"
+                  name="description"
                   children={(field) => (
-                    <field.TextField
-                      label="External cover"
-                      placeholder="Cover Image URL"
+                    <field.TextAreaField
+                      label="Description"
+                      className="flex-1 h-42"
+                      placeholder="Sumary of the book"
                     />
                   )}
                 />
-                <form.AppField
-                  name="description"
-                  children={(field) => (
-                    <field.TextAreaField label="Description" />
-                  )}
-                />
-                <div className="flex w-full space-x-2">
-                  <DialogClose
-                    className={buttonVariants({ variant: "outline" })}
-                  >
-                    Cancel
-                  </DialogClose>
-                  <Button className="ml-auto" variant="outline">
-                    Reset
-                  </Button>
-                  <form.AppForm
-                    children={
-                      <form.SubmitButton className="self-center ">
-                        Register Book
-                      </form.SubmitButton>
-                    }
-                  />
-                </div>
               </TabsContent>
               <TabsContent className="space-y-3 w-full h-full" value="series">
                 <div className="flex space-x-3">
@@ -187,15 +155,40 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                     <field.TextAreaField
                       label="Series Description"
                       type="number"
-                      className="h-77"
+                      className="h-75"
                       placeholder="Order in the series"
                     />
                   )}
                 />
               </TabsContent>
-              <TabsContent value="editions"></TabsContent>
-              <TabsContent value="cover"></TabsContent>
+              <TabsContent value="editions" className="min-h-96"></TabsContent>
+              <TabsContent value="cover" className="min-h-96">
+                <form.AppField
+                  name="externalCover"
+                  children={(field) => (
+                    <field.TextField
+                      label="External cover"
+                      placeholder="Cover Image URL"
+                    />
+                  )}
+                />
+              </TabsContent>
             </Tabs>
+            <div className="flex w-full space-x-2 mt-2">
+              <DialogClose className={buttonVariants({ variant: "outline" })}>
+                Cancel
+              </DialogClose>
+              <Button className="ml-auto" variant="outline">
+                Reset
+              </Button>
+              <form.AppForm
+                children={
+                  <form.SubmitButton className="self-center ">
+                    Register Book
+                  </form.SubmitButton>
+                }
+              />
+            </div>
           </div>
         </form>
       </DialogContent>

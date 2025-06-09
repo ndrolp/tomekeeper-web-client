@@ -40,7 +40,7 @@ export const BookCard = ({
   return (
     <Card className="p-0 gap-0 overflow-hidden cursor-pointer">
       <CardHeader className="p-0 m-0 mb-0 gap-0">
-        <BookCover />
+        <BookCover coverUrl={book.externalCoverUrl} />
       </CardHeader>
       <CardContent className="p-2 border-t flex flex-col h-full">
         <p className="text-lg">{book.title}</p>
