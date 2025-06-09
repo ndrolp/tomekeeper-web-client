@@ -14,8 +14,14 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
 import { BookForm } from "../components/BookForm";
+import { useState } from "react";
+import { BooksList } from "../components/BooksList";
+
+type ViewTypes = "grid" | "list";
 
 export const BooksHome = () => {
+  const [viewType, setViewType] = useState<ViewTypes>("grid");
+
   const query = useQuery({
     queryKey: ["books"],
     queryFn: DataSource.Books.getBooks,
@@ -40,9 +46,12 @@ export const BooksHome = () => {
           </div>
           <div className="flex-row align-end w-fit flex flex-wrap lg:flex-nowrap items-center gap-2 ">
             <ToggleGroup
-              value={"grid"}
+              value={viewType}
               type="single"
               variant="outline"
+              onValueChange={(value) => {
+                if (value) setViewType(value as ViewTypes);
+              }}
               className=""
             >
               <ToggleGroupItem value="grid" aria-label="Toggle bold">
@@ -69,9 +78,13 @@ export const BooksHome = () => {
             placeholder="Filter by title, author, or ISBN..."
           />
         </div>
-        <BooksGrid books={query.data} />
+        {viewType === "grid" ? (
+          <BooksGrid books={query.data} />
+        ) : (
+          <BooksList books={query.data} />
+        )}
       </div>
-      <aside className="ml-4 hidden w-full border-l bg-background px-4 md:block md:w-[340px]">
+      <aside className="ml-4 hidden w-full border-l bg-background px-4 sticky md:block md:w-[340px]">
         <p className="text-lg font-bold">Filters</p>
         <div></div>
       </aside>

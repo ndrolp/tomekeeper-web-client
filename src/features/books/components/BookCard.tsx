@@ -5,19 +5,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Image } from "lucide-react";
 import type { Book } from "../types/Book";
+import { BookCover } from "./BookCover";
 
 export const BookCard = ({ book }: { book: Book }) => {
   return (
     <Card className="p-0 gap-0 overflow-hidden cursor-pointer">
       <CardHeader className="p-0 m-0 mb-0 gap-0">
-        <AspectRatio className="bg-muted rounded-t-lg" ratio={2 / 3}>
-          <div className="h-full w-full grid place-items-center">
-            <Image size={64} className="text-gray-400 opacity-30" />
-          </div>
-        </AspectRatio>
+        <BookCover />
       </CardHeader>
       <CardContent className="p-2 border-t flex-column h-full">
         <p className="text-lg">{book.title}</p>
