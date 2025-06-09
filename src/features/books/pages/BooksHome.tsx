@@ -1,4 +1,3 @@
-//@ts-check
 import {
   ArrowDownAz,
   Barcode,
@@ -92,10 +91,8 @@ export const BooksHome = () => {
               </Select>
             </div>
             <Drawer>
-              <DrawerTrigger className="md:hidden">
-                <Button variant="outline">
-                  <Funnel />
-                </Button>
+              <DrawerTrigger className="md:hidden border p-2 rounded-md">
+                <Funnel size={17} />
               </DrawerTrigger>
               <DrawerContent className="md:hidden">
                 <DrawerHeader>
@@ -114,6 +111,7 @@ export const BooksHome = () => {
             </Drawer>
           </div>
           <Input
+            type="search"
             className="w-full mt-1 md:mt-0 "
             placeholder="Filter by title, author, or ISBN..."
           />
