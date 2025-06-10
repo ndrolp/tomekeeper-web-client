@@ -1,6 +1,4 @@
 import { useAppForm } from "@/common/components/form";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Image, ImageUp } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -12,11 +10,14 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
+import { analyzeEpub } from "../libs/analyzeEpub";
+import { BookAudio, LoaderCircle } from "lucide-react";
 
 export const BookForm = ({ children }: { children: React.ReactNode }) => {
   const { mutate } = useMutation({
     mutationFn: DataSource.Books.registerBook,
   });
+
   const form = useAppForm({
     defaultValues: {
       title: "",
@@ -39,6 +40,21 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
     },
   });
 
+  const { mutate: launchEpubAnalyzer, isPending } = useMutation({
+    mutationFn: analyzeEpub,
+    onSuccess(data) {
+      form.setFieldValue("title", data.metadata.title ?? "");
+      form.setFieldValue("author", data.metadata.author ?? "");
+      form.setFieldValue("language", data.metadata.language ?? "");
+      form.setFieldValue("genre", data.metadata.subject ?? "");
+      form.setFieldValue("description", data.metadata.description ?? "");
+      form.setFieldValue(
+        "publicationYear",
+        data.extras.meta.date?.split("-")[0] ?? "",
+      );
+    },
+  });
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -49,7 +65,22 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         <DialogHeader>
-          <DialogTitle>Register Book</DialogTitle>
+          <DialogTitle className="flex items-center">
+            Register Book
+            <Button
+              className="ml-2"
+              variant="ghost"
+              onClick={() => {
+                launchEpubAnalyzer();
+              }}
+            >
+              {isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                <BookAudio />
+              )}
+            </Button>
+          </DialogTitle>
         </DialogHeader>
         <form
           className="w-full flex space-x-6 items-start"
@@ -150,7 +181,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                   />
                 </div>
                 <form.AppField
-                  name="description"
+                  name="serie.description"
                   children={(field) => (
                     <field.TextAreaField
                       label="Series Description"
