@@ -20,7 +20,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
 import { BookForm } from "../components/BookForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BooksList } from "../components/BooksList";
 import {
   Drawer,
@@ -34,14 +34,26 @@ import {
 } from "@/components/ui/drawer";
 import type { GetBooksSortOptions } from "../data/BooksDatasource";
 import { useDebounce } from "use-debounce";
+import { useSearchParams } from "react-router";
 
 type ViewTypes = "grid" | "list";
+const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ["title", "series", "author"];
 
 export const BooksHome = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [viewType, setViewType] = useState<ViewTypes>("list");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get("query") ?? "",
+  );
   const [debouncedQuery] = useDebounce(searchQuery, 300);
-  const [sort, setSort] = useState<GetBooksSortOptions>("title");
+  const [sort, setSort] = useState<GetBooksSortOptions>(
+    ALLOWED_SORT_TYPES.includes(
+      (searchParams.get("sort") as GetBooksSortOptions) ?? "title",
+    )
+      ? ((searchParams.get("sort") as GetBooksSortOptions) ?? "title")
+      : "title",
+  );
 
   const query = useQuery({
     queryKey: ["books", { deb: debouncedQuery, sort }],
@@ -51,6 +63,28 @@ export const BooksHome = () => {
         sort: sort,
       }),
   });
+
+  useEffect(() => {
+    const initialParams = new URLSearchParams(searchParams.toString());
+    if (debouncedQuery) searchParams.set("query", debouncedQuery);
+    if (sort !== searchParams.get("sort") && sort !== "title") {
+      searchParams.set("sort", sort);
+    }
+
+    const areParamsEqual = initialParams.toString() === searchParams.toString();
+
+    if (!areParamsEqual && (sort || debouncedQuery))
+      setSearchParams(searchParams);
+  }, [debouncedQuery, sort]);
+
+  useEffect(() => {
+    if (sort !== searchParams.get("sort"))
+      setSort((searchParams.get("sort") as GetBooksSortOptions) ?? "title");
+
+    if (debouncedQuery !== searchParams.get("query")) {
+      setSearchQuery(searchParams.get("query") ?? "");
+    }
+  }, [searchParams]);
 
   return (
     <div className="flex w-full relative">

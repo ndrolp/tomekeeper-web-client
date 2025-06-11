@@ -8,10 +8,12 @@ import {
 import { TabsContent, TabsList, Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
 import { analyzeEpub } from "../libs/analyzeEpub";
 import { BookAudio, LoaderCircle } from "lucide-react";
+import { useDebounce } from "use-debounce";
+import type { ISeries } from "@/features/series/data/SeriesDataSource";
 
 export const BookForm = ({ children }: { children: React.ReactNode }) => {
   const { mutate } = useMutation({
@@ -28,7 +30,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
       publicationYear: "",
       externalCover: "",
       serie: {
-        id: null,
+        id: "",
         name: "",
         description: "",
       },
@@ -39,6 +41,13 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
       mutate(value);
       form.reset();
     },
+  });
+
+  const [debouncedSeriesName] = useDebounce(form.state.values.serie.name, 300);
+
+  const seriesQuery = useQuery({
+    queryKey: ["series", { seriesTitle: debouncedSeriesName }],
+    queryFn: async () => await DataSource.Series.getSeries(debouncedSeriesName),
   });
 
   const queryClient = useQueryClient();
@@ -167,9 +176,23 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                     name="serie.name"
                     children={(field) => (
                       <field.AutoCompleteField
-                        options={[{ label: "Prueba", value: "asd" }]}
+                        options={seriesQuery.data ?? ([] as ISeries[])}
                         emptyMessage=""
                         placeholder="Series which the book is part of"
+                        getOptionLabel={(item) => item?.name ?? ""}
+                        getOptionValue={(item) => item?.name ?? ""}
+                        onValueChange={(a) => {
+                          const value = a as ISeries;
+                          form.setFieldValue("serie.name", value.name ?? "");
+                          form.setFieldValue(
+                            "serie.description",
+                            value.description ?? "",
+                          );
+                          form.setFieldValue(
+                            "serie.id",
+                            value.id?.toString() ?? "",
+                          );
+                        }}
                         label="Series Name"
                       />
                     )}
@@ -192,7 +215,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                     <field.TextAreaField
                       label="Series Description"
                       type="number"
-                      className="h-75"
+                      className="h-74"
                       placeholder="Order in the series"
                     />
                   )}

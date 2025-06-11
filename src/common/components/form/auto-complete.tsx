@@ -15,31 +15,36 @@ import { useFieldContext } from ".";
 
 export type Option = Record<"value" | "label", string> & Record<string, string>;
 
-type AutoCompleteProps = {
-  options: Option[];
+export type AutoCompleteProps<T> = {
+  options: T[];
   emptyMessage: string;
-  value?: Option;
-  onValueChange?: (value: Option) => void;
+  value?: T;
   isLoading?: boolean;
   disabled?: boolean;
   placeholder?: string;
   label?: string;
+
+  onValueChange?: (value: T) => void;
+  getOptionLabel: (option: T) => string;
+  getOptionValue: (option: T) => string;
 };
 
-export const AutoCompleteField = ({
+export const AutoCompleteField = <T,>({
   options,
   placeholder,
   emptyMessage,
   value,
-  onValueChange,
   disabled,
   isLoading = false,
   label = "Label",
-}: AutoCompleteProps) => {
+  onValueChange,
+  getOptionLabel,
+  getOptionValue,
+}: AutoCompleteProps<T>) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Option>(value as Option);
+  const [selected, setSelected] = useState<T>(value as T);
 
   const field = useFieldContext<string>();
 
@@ -58,7 +63,7 @@ export const AutoCompleteField = ({
       // This is not a default behaviour of the <input /> field
       if (event.key === "Enter" && input.value !== "") {
         const optionToSelect = options.find(
-          (option) => option.label === input.value,
+          (option) => getOptionLabel(option) === input.value,
         );
         if (optionToSelect) {
           setSelected(optionToSelect);
@@ -67,20 +72,19 @@ export const AutoCompleteField = ({
       }
 
       if (event.key === "Escape") {
-        input.blur();
+        setOpen(false);
       }
     },
     [isOpen, options, onValueChange],
   );
 
   const handleBlur = useCallback(() => {
-    setOpen(false);
-    field.handleChange(field.state.value);
+    //field.handleChange(field.state.value);
   }, [selected]);
 
   const handleSelectOption = useCallback(
-    (selectedOption: Option) => {
-      field.handleChange(selectedOption.label);
+    (selectedOption: T) => {
+      field.handleChange(getOptionLabel(selectedOption));
 
       setSelected(selectedOption);
       onValueChange?.(selectedOption);
@@ -95,10 +99,10 @@ export const AutoCompleteField = ({
   );
 
   return (
-    <div className="space-y-1 w-full">
+    <div className="space-y-1 w-full" onBlur={() => {}}>
       <Label htmlFor={field.name}>{label}</Label>
       <CommandPrimitive onKeyDown={handleKeyDown}>
-        <div className="border rounded-lg bg-input/20 [&>div:first-child]:border-0">
+        <div className="border rounded-lg bg-input/20 [&>div:first-child]:border-0 focus-within:border-primary">
           <CommandInput
             id={field.name}
             ref={inputRef}
@@ -128,22 +132,21 @@ export const AutoCompleteField = ({
               ) : null}
               {options.length > 0 && !isLoading ? (
                 <CommandGroup>
-                  {options.map((option) => {
-                    const isSelected = selected?.value === option.value;
+                  {options.map((option, index) => {
+                    const isSelected =
+                      getOptionValue(selected) === getOptionValue(option);
+
                     return (
                       <CommandItem
-                        key={option.value}
-                        value={option.label}
-                        onMouseDown={(event) => {
-                          event.preventDefault();
-                          event.stopPropagation();
+                        key={index}
+                        value={getOptionValue(option)}
+                        onSelect={() => {
+                          handleSelectOption(option);
+                          setOpen(false);
                         }}
-                        onSelect={() => handleSelectOption(option)}
-                        className={`flex w-full items-center gap-2"
-                        ${!isSelected ? "pl-8" : null}`}
                       >
                         {isSelected ? <Check className="w-4" /> : null}
-                        {option.label}
+                        {getOptionLabel(option)}
                       </CommandItem>
                     );
                   })}

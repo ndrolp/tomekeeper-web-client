@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu } from "electron";
 
+app.setName("Tomekeeper");
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,

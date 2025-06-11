@@ -1,4 +1,4 @@
-import { Gem, Moon, Sun } from "lucide-react";
+import { Cat, Gem, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,8 @@ export function ThemeToggle() {
         <Button variant="outline" size="icon">
           {theme === "amethyst" ? (
             <Gem className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          ) : theme === "catppuccin" ? (
+            <Cat className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           ) : (
             <>
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -34,11 +36,14 @@ export function ThemeToggle() {
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("amethyst")}>
           Amethyst
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("catppuccin")}>
+          Catppuccin
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -10,7 +10,6 @@ export const BookCover = ({
   placeholderImageSize?: number;
   roundedType?: "rounded-t-lg" | "rounded-lg";
 }) => {
-  console.log(coverUrl);
   return (
     <AspectRatio className={`bg-muted ${roundedType}`} ratio={180 / 303}>
       {coverUrl ? (
