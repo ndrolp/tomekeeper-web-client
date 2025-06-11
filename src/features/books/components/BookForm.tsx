@@ -10,10 +10,13 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
-import { analyzeEpub } from "../libs/analyzeEpub";
-import { BookAudio, LoaderCircle } from "lucide-react";
+import { analyzeEpub, type AnalyzeEbupResult } from "../libs/analyzeEpub";
+import { BookAudio, BookCopy, LoaderCircle } from "lucide-react";
 import { useDebounce } from "use-debounce";
 import type { ISeries } from "@/features/series/data/SeriesDataSource";
+import { useState } from "react";
+import { BookCover } from "./BookCover";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const BookForm = ({ children }: { children: React.ReactNode }) => {
   const { mutate } = useMutation({
@@ -52,18 +55,30 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
 
   const queryClient = useQueryClient();
 
+  const [data, setData] = useState<AnalyzeEbupResult | null>(null);
+
   const { mutate: launchEpubAnalyzer, isPending } = useMutation({
     mutationFn: analyzeEpub,
     onSuccess(data) {
+      console.log("1");
       form.setFieldValue("title", data.metadata.title ?? "");
+      console.log("2");
       form.setFieldValue("author", data.metadata.author ?? "");
+      console.log("3");
       form.setFieldValue("language", data.metadata.language ?? "");
+      console.log("4");
       form.setFieldValue("genre", data.metadata.subject ?? "");
+      console.log("5");
       form.setFieldValue("description", data.metadata.description ?? "");
+      console.log("6");
+      console.log("7");
+      setData(data);
       form.setFieldValue(
         "publicationYear",
         data.extras.meta.date?.split("-")[0] ?? "",
       );
+      console.log("SALDJ");
+
       queryClient.invalidateQueries({ queryKey: ["books"] });
     },
   });
@@ -223,15 +238,26 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
               </TabsContent>
               <TabsContent value="editions" className="min-h-96"></TabsContent>
               <TabsContent value="cover" className="min-h-96">
-                <form.AppField
-                  name="externalCover"
-                  children={(field) => (
-                    <field.TextField
-                      label="External cover"
-                      placeholder="Cover Image URL"
+                <div className="flex  flex-col md:flex-row-reverse gap-3 w-full justify-center ">
+                  <div className="w-30 md:w-65 space-y-2 mt-2 mx-auto rounded-t-lg">
+                    <BookCover
+                      className="m-auto"
+                      roundedType="rounded-t-lg"
+                      coverUrl={`data:${data?.coverImage.mime};base64,${data?.coverImage.img}`}
                     />
-                  )}
-                />
+                    <p className="text-destructive">Hola</p>
+                  </div>
+                  <form.AppField
+                    name="externalCover"
+                    children={(field) => (
+                      <field.TextField
+                        label="External cover"
+                        placeholder="Cover Image URL"
+                      />
+                    )}
+                  />
+                  <div className="max-w-100"></div>
+                </div>
               </TabsContent>
             </Tabs>
             <div className="flex w-full space-x-2 mt-2">

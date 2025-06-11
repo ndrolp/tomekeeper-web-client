@@ -2,6 +2,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Image } from "lucide-react";
 
 export const BookCover = ({
+  className = "",
   coverUrl = undefined,
   placeholderImageSize = 64,
   roundedType = "rounded-t-lg",
@@ -9,9 +10,13 @@ export const BookCover = ({
   coverUrl?: string;
   placeholderImageSize?: number;
   roundedType?: "rounded-t-lg" | "rounded-lg";
+  className?: string;
 }) => {
   return (
-    <AspectRatio className={`bg-muted ${roundedType}`} ratio={180 / 303}>
+    <AspectRatio
+      className={`bg-muted ${roundedType} ${className}`}
+      ratio={180 / 303}
+    >
       {coverUrl ? (
         <img src={coverUrl} alt="" className={`h-full w-full ${roundedType}`} />
       ) : (

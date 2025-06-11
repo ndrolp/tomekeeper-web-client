@@ -27,7 +27,7 @@ export const BaseLayout = () => {
             <ThemeToggle />
           </div>
         </div>
-        <div className="p-4 ">
+        <div className="p-4 px-0">
           <Outlet />
         </div>
       </main>

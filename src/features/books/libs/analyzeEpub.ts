@@ -39,7 +39,7 @@ export async function analyzeEpub(): Promise<AnalyzeEbupResult> {
   });
 }
 
-interface AnalyzeEbupResult {
+export interface AnalyzeEbupResult {
   metadata: {
     title?: string;
     author?: string;
@@ -52,5 +52,9 @@ interface AnalyzeEbupResult {
     meta: {
       date?: string;
     };
+  };
+  coverImage: {
+    img: string | undefined | null;
+    mime: string | undefined | null;
   };
 }
