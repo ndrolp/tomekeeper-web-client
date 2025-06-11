@@ -8,7 +8,7 @@ import {
 import { TabsContent, TabsList, Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataSource } from "@/common/data/Datasource";
 import { analyzeEpub } from "../libs/analyzeEpub";
 import { BookAudio, LoaderCircle } from "lucide-react";
@@ -28,6 +28,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
       publicationYear: "",
       externalCover: "",
       serie: {
+        id: null,
         name: "",
         description: "",
       },
@@ -39,6 +40,8 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
       form.reset();
     },
   });
+
+  const queryClient = useQueryClient();
 
   const { mutate: launchEpubAnalyzer, isPending } = useMutation({
     mutationFn: analyzeEpub,
@@ -52,6 +55,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
         "publicationYear",
         data.extras.meta.date?.split("-")[0] ?? "",
       );
+      queryClient.invalidateQueries({ queryKey: ["books"] });
     },
   });
 
@@ -162,9 +166,11 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                   <form.AppField
                     name="serie.name"
                     children={(field) => (
-                      <field.TextField
-                        label="Series Name"
+                      <field.AutoCompleteField
+                        options={[{ label: "Prueba", value: "asd" }]}
+                        emptyMessage=""
                         placeholder="Series which the book is part of"
+                        label="Series Name"
                       />
                     )}
                   />

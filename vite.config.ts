@@ -10,6 +10,9 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  build: {
+    outDir: "dist/react",
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

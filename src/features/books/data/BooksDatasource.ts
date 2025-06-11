@@ -1,4 +1,3 @@
- 
 import { NOT_IMPLEMENTED_ERROR } from "@/common/types/errors";
 import type { Book } from "../types/Book";
 import { BooksApiDataSource } from "./BooksApiDatasource";
@@ -13,12 +12,12 @@ export interface GetBooksOptions {
 
 export abstract class BooksDataSource {
   static async getBooks(options: GetBooksOptions): Promise<Book[]> {
-    console.log(options);
+    void options;
     throw NOT_IMPLEMENTED_ERROR;
   }
 
   static async registerBook(book: Book): Promise<Book> {
-    console.log(book);
+    void book;
     throw NOT_IMPLEMENTED_ERROR;
   }
 }

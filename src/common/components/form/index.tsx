@@ -4,6 +4,7 @@ import { CheckboxField } from "./checkbox-field";
 import { SelectField } from "./select-field";
 import { SubmitButton } from "./submit-button";
 import { TextAreaField } from "./textarea-field";
+import { AutoCompleteField } from "./auto-complete";
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();
@@ -14,6 +15,7 @@ export const { useAppForm } = createFormHook({
     CheckboxField,
     SelectField,
     TextAreaField,
+    AutoCompleteField,
   },
   formComponents: {
     SubmitButton,

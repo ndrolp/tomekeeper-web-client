@@ -9,7 +9,7 @@ export const BooksList = ({
   loading: boolean;
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="gap-2 grid grid-cols-1 lg:grid-cols-2">
       {!loading ? (
         <>
           {books.map((book, index) => {

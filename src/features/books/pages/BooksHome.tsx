@@ -38,7 +38,7 @@ import { useDebounce } from "use-debounce";
 type ViewTypes = "grid" | "list";
 
 export const BooksHome = () => {
-  const [viewType, setViewType] = useState<ViewTypes>("grid");
+  const [viewType, setViewType] = useState<ViewTypes>("list");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedQuery] = useDebounce(searchQuery, 300);
   const [sort, setSort] = useState<GetBooksSortOptions>("title");
@@ -79,11 +79,11 @@ export const BooksHome = () => {
               }}
               className=""
             >
-              <ToggleGroupItem value="grid" aria-label="Toggle bold">
-                <Grid3x3 className="h-4 w-4" />
-              </ToggleGroupItem>
               <ToggleGroupItem value="list" aria-label="Toggle list">
                 <List className="h-4 w-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="grid" aria-label="Toggle bold">
+                <Grid3x3 className="h-4 w-4" />
               </ToggleGroupItem>
             </ToggleGroup>
             <div className="flex items-center flex-1 gap-2">
