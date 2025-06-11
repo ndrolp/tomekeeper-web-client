@@ -122,7 +122,7 @@ export const AutoCompleteField = <T,>({
             className={`animate-in fade-in-0 zoom-in-95 absolute top-0 z-10 w-full rounded-xl bg-accent border-input outline-none
             ${isOpen ? "block" : "hidden"}`}
           >
-            <CommandList className="rounded-lg border-input">
+            <CommandList className="rounded-lg border-input bg-input">
               {isLoading ? (
                 <CommandPrimitive.Loading>
                   <div className="p-1">

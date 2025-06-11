@@ -1,4 +1,4 @@
-import { Cat, Gem, Moon, Sun } from "lucide-react";
+import { Cat, Computer, Gem, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,18 +31,23 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
+          <Sun />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <Moon />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("amethyst")}>
+          <Gem />
           Amethyst
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("catppuccin")}>
+          <Cat />
           Catppuccin
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
+          <Computer />
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -45,7 +45,9 @@ export const BookCard = ({
       <CardContent className="p-2 border-t flex flex-col h-full">
         <p className="text-lg">{book.title}</p>
         <p className="text-gray-500 text-sm">{book.author}</p>
-        <p className="text-xs text-gray-500 mt-2">{book.series}</p>
+        <p className="text-xs text-gray-500 mt-2">
+          {book?.seriesOrder ? `#${book.seriesOrder}` : " "} {book.series}
+        </p>
       </CardContent>
       <CardFooter className="p-0 px-2 pb-2">
         <div className="flex w-full justify-between mt-2 items-center pr-1">
