@@ -20,6 +20,11 @@ export abstract class BooksDataSource {
     void book;
     throw NOT_IMPLEMENTED_ERROR;
   }
+
+  static async getBookDetails(id: number | string): Promise<Book> {
+    void id;
+    throw NOT_IMPLEMENTED_ERROR;
+  }
 }
 
 export function getBooksDataSource(): typeof BooksDataSource {

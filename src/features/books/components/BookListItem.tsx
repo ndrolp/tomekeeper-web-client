@@ -3,6 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Book } from "../types/Book";
 import { BookCover } from "./BookCover";
 import { Trash } from "lucide-react";
+import { useNavigate } from "react-router";
+import { useCallback } from "react";
 
 export const BookListItem = ({
   book,
@@ -11,6 +13,11 @@ export const BookListItem = ({
   book?: Book;
   skeleton?: boolean;
 }) => {
+  const navigate = useNavigate();
+  const viewBook = useCallback(() => {
+    navigate("/books/view/" + book?.id);
+  }, [book]);
+
   if (skeleton) {
     return (
       <div className="border flex p-2 rounded-lg gap-3 items-center">
@@ -30,8 +37,8 @@ export const BookListItem = ({
   }
 
   return (
-    <div className="border flex p-2 rounded-lg gap-3 items-center">
-      <div className="w-15 rounded-lg">
+    <div className="border flex p-2 rounded-lg gap-3 items-center shadow">
+      <div onClick={viewBook} className="w-15 rounded-lg">
         <BookCover
           placeholderImageSize={20}
           roundedType="rounded-lg"
@@ -39,7 +46,15 @@ export const BookListItem = ({
         />
       </div>
       <div className="h-full ">
-        <p className="mb-1">{book?.title}</p>
+        <Button
+          onClick={viewBook}
+          variant="link"
+          className="border-none primary-foreground text-md p-0"
+        >
+          <p className="mb-1 text-foreground hover:text-primary focus:text-primary">
+            {book?.title}
+          </p>
+        </Button>
         <p className="opacity-50">{book?.author ?? <br />}</p>
         <p className="opacity-30 text-xs">
           {book?.seriesOrder ? `#${book.seriesOrder}` : " "}{" "}

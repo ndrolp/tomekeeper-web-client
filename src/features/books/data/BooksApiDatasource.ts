@@ -12,4 +12,9 @@ export class BooksApiDataSource implements BooksDataSource {
     const data = await api.post<Book>("/books/", book);
     return data.data;
   }
+
+  static async getBookDetails(id: string): Promise<Book> {
+    const data = await api.get<Book>(`/books/${id}`);
+    return data.data;
+  }
 }

@@ -8,7 +8,12 @@ export class BooksInternalDataSource implements BooksDataSource {
   }
 
   static async registerBook(book: Book): Promise<Book> {
-    console.log(book);
+    void book;
+    throw NOT_IMPLEMENTED_ERROR;
+  }
+
+  static async getBookDetails(id: string): Promise<Book> {
+    void id;
     throw NOT_IMPLEMENTED_ERROR;
   }
 }

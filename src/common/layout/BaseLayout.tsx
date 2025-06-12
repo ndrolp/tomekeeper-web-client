@@ -10,7 +10,7 @@ export const BaseLayout = () => {
     <SidebarProvider>
       <AppSidebar />
       <main className="w-full  relative flex flex-col ">
-        <div className="border-b flex p-3 items-center justify-between w-full">
+        <div className="border-b flex p-3 items-center justify-between w-full top-0 sticky  z-30 bg-background/90 backdrop-blur-md">
           <div className="gap-2 flex items-center">
             <SidebarTrigger />
             <h1>Tomekeeper</h1>

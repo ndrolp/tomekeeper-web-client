@@ -17,10 +17,8 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
-import { DataSource } from "@/common/data/Datasource";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BookForm } from "../components/BookForm";
-import { useEffect, useState } from "react";
 import { BooksList } from "../components/BooksList";
 import {
   Drawer,
@@ -35,12 +33,15 @@ import {
 import type { GetBooksSortOptions } from "../data/BooksDatasource";
 import { useDebounce } from "use-debounce";
 import { useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
+import { BooksQueries, BooksQueryKeys } from "../queries/BooksQueries";
 
 type ViewTypes = "grid" | "list";
 const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ["title", "series", "author"];
 
 export const BooksHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const [viewType, setViewType] = useState<ViewTypes>("list");
   const [searchQuery, setSearchQuery] = useState<string>(
@@ -55,14 +56,12 @@ export const BooksHome = () => {
       : "title",
   );
 
-  const query = useQuery({
-    queryKey: ["books", { deb: debouncedQuery, sort }],
-    queryFn: async () =>
-      await DataSource.Books.getBooks({
-        query: debouncedQuery,
-        sort: sort,
-      }),
-  });
+  const query = useQuery(
+    BooksQueries.booksListQueryOptions({
+      query: debouncedQuery,
+      sortMethod: sort,
+    }),
+  );
 
   useEffect(() => {
     const initialParams = new URLSearchParams(searchParams.toString());
@@ -87,10 +86,10 @@ export const BooksHome = () => {
   }, [searchParams]);
 
   return (
-    <div className="flex w-full relative">
+    <div className="flex w-full relative bg-background">
       <div className="w-full ">
-        <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-1 top-0 sticky z-10 bg-background/94 backdrop-blur-2xl px-4">
-          <div className="flex items-center gap-4 w-full mb-4 md:mb-0 pb-3 md:border-none md:pb-0">
+        <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-3 top-0 sticky z-50 bg-background/90 backdrop-blur-2xl px-4 border-b shadow-2xl md:shadow-none">
+          <div className="flex items-center gap-4 w-full mb-1 md:mb-0 pb-3 md:border-none md:pb-0">
             <p className="text-xl font-bold">Your Library</p>
             <div className="flex gap-2 ml-auto md:ml-0">
               <BookForm>
@@ -98,7 +97,14 @@ export const BooksHome = () => {
                   <BookPlus />
                 </Button>
               </BookForm>
-              <Button variant="outline">
+              <Button
+                onClick={() => {
+                  queryClient.refetchQueries({
+                    queryKey: [BooksQueryKeys.Books],
+                  });
+                }}
+                variant="outline"
+              >
                 <Barcode />
               </Button>
             </div>
@@ -172,15 +178,30 @@ export const BooksHome = () => {
         </div>
         <div className="z-0 px-4">
           {viewType === "grid" ? (
-            <BooksGrid books={query.data} loading={query.isPending} />
+            <BooksGrid
+              books={query.data}
+              loading={query.isFetching || query.isPending}
+            />
           ) : (
-            <BooksList books={query.data} loading={query.isPending} />
+            <BooksList
+              books={query.data}
+              loading={query.isPending || query.isFetching}
+            />
           )}
+          {query.data?.length === 0 && !query.isPending ? (
+            <div className="m-auto p-20 grid place-items-center text-5xl opacity-10">
+              <p className="mt-0 text-center uppercase font-bold">
+                There's Nothing to see here
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
-      <aside className="ml-4 hidden w-full border-l bg-background px-4 md:block md:w-[340px] sticky top-0 right-0 ">
-        <p className="text-lg font-bold">Filters</p>
-        <div></div>
+      <aside className=" hidden w-full border-l bg-background px-0 md:block md:w-[340px] relative top-0 z-50">
+        <div className="top-0 sticky p-4 z-50 bg-background">
+          <p className="text-lg font-bold">Filters</p>
+          <div></div>
+        </div>
       </aside>
     </div>
   );
