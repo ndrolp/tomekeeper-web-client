@@ -38,7 +38,7 @@ export const BookCard = ({
   }
 
   return (
-    <Card className="p-0 gap-0 overflow-hidden cursor-pointer">
+    <Card className="p-0 gap-0 overflow-hidden cursor-pointer transition-transform transform hover:scale-102">
       <CardHeader className="p-0 m-0 mb-0 gap-0">
         <BookCover coverUrl={book.externalCoverUrl} />
       </CardHeader>

@@ -35,6 +35,7 @@ import { useDebounce } from "use-debounce";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { BooksQueries, BooksQueryKeys } from "../queries/BooksQueries";
+import { NavigateButton } from "@/common/components/NavigateButton";
 
 type ViewTypes = "grid" | "list";
 const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ["title", "series", "author"];

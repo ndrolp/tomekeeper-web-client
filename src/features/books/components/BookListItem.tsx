@@ -37,7 +37,7 @@ export const BookListItem = ({
   }
 
   return (
-    <div className="border flex p-2 rounded-lg gap-3 items-center shadow">
+    <div className="border flex p-2 rounded-lg gap-3 items-center shadow transition-transform transform hover:scale-102 hover:shadow-2xl">
       <div onClick={viewBook} className="w-15 rounded-lg">
         <BookCover
           placeholderImageSize={20}
