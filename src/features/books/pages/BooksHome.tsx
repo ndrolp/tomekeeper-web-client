@@ -35,7 +35,8 @@ import { useDebounce } from "use-debounce";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { BooksQueries, BooksQueryKeys } from "../queries/BooksQueries";
-import { NavigateButton } from "@/common/components/NavigateButton";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 type ViewTypes = "grid" | "list";
 const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ["title", "series", "author"];
@@ -63,6 +64,8 @@ export const BooksHome = () => {
       sortMethod: sort,
     }),
   );
+
+  const filters = useQuery(BooksQueries.bookFiltersQueryOptions());
 
   useEffect(() => {
     const initialParams = new URLSearchParams(searchParams.toString());
@@ -199,9 +202,31 @@ export const BooksHome = () => {
         </div>
       </div>
       <aside className=" hidden w-full border-l bg-background px-0 md:block md:w-[340px] relative top-0 z-50">
-        <div className="top-0 sticky p-4 z-50 bg-background">
-          <p className="text-lg font-bold">Filters</p>
-          <div></div>
+        <div className="top-0 sticky  z-50 bg-background">
+          <p className="text-lg font-bold  border-b p-4 pb-4">Filters</p>
+          <div className="p-4 space-y-4">
+            <p className="text-lg mb-2 text-start font-bold">Genres</p>
+            <div className="space-y-2">
+              {filters.data?.genres.map((genre, index) => (
+                <div className="flex gap-2">
+                  <Checkbox id={`genre-${genre}`} key={index}></Checkbox>
+                  <Label>{genre}</Label>
+                </div>
+              ))}
+            </div>
+            <p className="text-lg mb-2 text-start font-bold">Author</p>
+            <div className="space-y-2">
+              {filters.data?.authors.map((author, index) => (
+                <div className="flex gap-2">
+                  <Checkbox id={`genre-${author}`} key={index}></Checkbox>
+                  <Label>{author}</Label>
+                </div>
+              ))}
+            </div>
+            <Button variant="outline" className="w-full">
+              Aplicar Filtros
+            </Button>
+          </div>
         </div>
       </aside>
     </div>

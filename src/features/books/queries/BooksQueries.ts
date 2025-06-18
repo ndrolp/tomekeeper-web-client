@@ -5,6 +5,7 @@ import type { GetBooksSortOptions } from "../data/BooksDatasource";
 export const BooksQueryKeys = {
   Books: "books",
   BookDetails: "book-details",
+  BooksFilters: "books-filters",
 };
 
 export class BooksQueries {
@@ -27,6 +28,13 @@ export class BooksQueries {
       queryKey: [BooksQueryKeys.BookDetails, id],
       queryFn: async () => await DataSource.Books.getBookDetails(id),
       enabled: !!id,
+    });
+  }
+
+  static bookFiltersQueryOptions() {
+    return queryOptions({
+      queryKey: [BooksQueryKeys.BooksFilters],
+      queryFn: async () => await DataSource.Books.getBooksFilters(),
     });
   }
 }

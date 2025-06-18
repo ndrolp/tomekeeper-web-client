@@ -35,3 +35,8 @@ export interface BookCreationDTO {
   };
   seriesOrder?: number;
 }
+
+export interface BookFilterDTO {
+  authors: string[];
+  genres: string[];
+}

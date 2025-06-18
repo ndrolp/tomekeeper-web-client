@@ -1,5 +1,5 @@
 import { NOT_IMPLEMENTED_ERROR } from "@/common/types/errors";
-import type { Book } from "../types/Book";
+import type { Book, BookFilterDTO } from "../types/Book";
 import type { BooksDataSource } from "./BooksDatasource";
 
 export class BooksInternalDataSource implements BooksDataSource {
@@ -14,6 +14,10 @@ export class BooksInternalDataSource implements BooksDataSource {
 
   static async getBookDetails(id: string): Promise<Book> {
     void id;
+    throw NOT_IMPLEMENTED_ERROR;
+  }
+
+  static async getBooksFilters(): Promise<BookFilterDTO> {
     throw NOT_IMPLEMENTED_ERROR;
   }
 }

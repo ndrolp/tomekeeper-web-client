@@ -1,6 +1,6 @@
 import { api } from "@/common/libs/api";
 import type { BooksDataSource } from "./BooksDatasource";
-import type { Book, BookCreationDTO } from "../types/Book";
+import type { Book, BookCreationDTO, BookFilterDTO } from "../types/Book";
 
 export class BooksApiDataSource implements BooksDataSource {
   static async getBooks({ query = "", sort = "" }): Promise<Book[]> {
@@ -15,6 +15,12 @@ export class BooksApiDataSource implements BooksDataSource {
 
   static async getBookDetails(id: string): Promise<Book> {
     const data = await api.get<Book>(`/books/${id}`);
+    return data.data;
+  }
+
+  static async getBooksFilters(): Promise<BookFilterDTO> {
+    const data = await api.get<BookFilterDTO>("/books/extras/filters");
+    console.log("ASKJD");
     return data.data;
   }
 }

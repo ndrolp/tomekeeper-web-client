@@ -5,24 +5,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Hash, User, Calendar, BookOpen, Edit } from "lucide-react";
+import { Hash, User, Calendar, BookOpen, Edit, ArrowLeft } from "lucide-react";
 import { BookCover } from "../components/BookCover";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { BooksQueries } from "../queries/BooksQueries";
 
 export default function BookPage() {
   const { id = "" } = useParams();
   const query = useQuery(BooksQueries.bookDetailQueryOptions({ id }));
+  const navigate = useNavigate();
 
   return (
     <div className="z-0">
       <div className="w-full px-4 flex content-between md:items-center">
-        <div className="flex-1">
-          <p className="text-3xl font-bold">{query.data?.title}</p>
-          <p className="text-fore">{query.data?.author}</p>
+        <div className="flex items-center flex-1 gap-4">
+          <Button
+            className="h-10 w-10"
+            variant="outline"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft />
+          </Button>
+          <div className="flex-1">
+            <p className="text-3xl font-bold">{query.data?.title}</p>
+            <p className="text-fore">{query.data?.author}</p>
+          </div>
         </div>
         <div>
           <Button variant="outline">
@@ -61,7 +71,7 @@ export default function BookPage() {
               <CardTitle className="text-xl">Description</CardTitle>
               <CardContent className="p-0 mt-3 ">
                 <div
-                  className="text-foreground/50"
+                  className="text-foreground/70"
                   dangerouslySetInnerHTML={{
                     __html: query.data?.description ?? "",
                   }}
@@ -77,22 +87,24 @@ export default function BookPage() {
               <div className="flex items-center gap-2">
                 <User size={16} />
                 <span className="font-bold">Author:</span>
-                <span className="font-thin opacity-85">Brandon Sanderson</span>
+                <span className="font-normal opacity-85">
+                  Brandon Sanderson
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Hash size={16} />
                 <span className="font-bold">ISBN:</span>
-                <span className="font-thin opacity-85"></span>
+                <span className="font-normal opacity-85"></span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar size={16} />
                 <span className="font-bold">Published:</span>
-                <span className="font-thin opacity-85">10/12/2024</span>
+                <span className="font-normal opacity-85">10/12/2024</span>
               </div>
               <div className="flex items-center gap-2">
                 <BookOpen size={16} />
                 <span className="font-bold">Pages:</span>
-                <span className="font-thin opacity-85"></span>
+                <span className="font-normal opacity-85"></span>
               </div>
             </CardContent>
             <CardFooter className="border-t flex flex-col items-start gap-2 p-0">
