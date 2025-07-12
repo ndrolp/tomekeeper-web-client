@@ -1,22 +1,27 @@
-import { createBrowserRouter } from "react-router";
-import { BaseLayout } from "./common/layout/BaseLayout";
-import App from "./App";
-import { BooksHome } from "./features/books/pages/BooksHome";
-import BookPage from "./features/books/pages/BookPage";
+import { createBrowserRouter } from 'react-router'
+import { BaseLayout } from './common/layout/BaseLayout'
+import App from './App'
+import { BooksHome } from './features/books/pages/BooksHome'
+import BookPage from './features/books/pages/BookPage'
+import { ConfigPage } from './features/config/pages/ConfigPage'
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <BaseLayout />,
-    children: [
-      { index: true, element: <App /> },
-      {
-        path: "books",
+    {
+        path: '/',
+        element: <BaseLayout />,
         children: [
-          { index: true, element: <BooksHome /> },
-          { path: "view/:id", element: <BookPage /> },
+            { index: true, element: <App /> },
+            {
+                path: 'books',
+                children: [
+                    { index: true, element: <BooksHome /> },
+                    { path: 'view/:id', element: <BookPage /> },
+                ],
+            },
+            {
+                path: 'config',
+                children: [{ index: true, element: <ConfigPage /> }],
+            },
         ],
-      },
-    ],
-  },
-]);
+    },
+])
