@@ -1,7 +1,7 @@
 import type { GetBooksSortOptions } from '../data/BooksDatasource'
 import { useState, createContext } from 'react'
 
-type ViewTypes = 'grid' | 'list'
+export type ViewTypes = 'grid' | 'list'
 
 export type BookProviderProps = {
     children: React.ReactNode

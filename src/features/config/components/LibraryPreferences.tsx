@@ -5,10 +5,21 @@ import {
     SelectItem,
     SelectTrigger,
 } from '@/components/ui/select'
+import {
+    BookProviderContext,
+    type ViewTypes,
+} from '@/features/books/providers/BookProvider'
 import { Select, SelectValue } from '@radix-ui/react-select'
 import { Library, Save } from 'lucide-react'
+import { useContext, useState } from 'react'
 
 export default function LibraryPreferences() {
+    const BooksContext = useContext(BookProviderContext)
+
+    const [viewType, setViewType] = useState(
+        () => BooksContext.orderingAndView.viewType ?? 'grid'
+    )
+
     return (
         <div>
             <Card className="bg-transparent">
@@ -30,16 +41,18 @@ export default function LibraryPreferences() {
                     <div className="flex w-full gap-4">
                         <div className="w-full gap-2 flex flex-col">
                             <span>Default Book View</span>
-                            <Select>
+                            <Select
+                                value={viewType}
+                                onValueChange={(value) => {
+                                    setViewType(value as ViewTypes)
+                                }}
+                            >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Theme" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="light">Light</SelectItem>
-                                    <SelectItem value="dark">Dark</SelectItem>
-                                    <SelectItem value="system">
-                                        System
-                                    </SelectItem>
+                                    <SelectItem value="list">List</SelectItem>
+                                    <SelectItem value="grid">Grid</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -61,7 +74,13 @@ export default function LibraryPreferences() {
                     </div>
                 </CardContent>
                 <CardFooter className="items-end">
-                    <Button variant="secondary" className="ml-auto">
+                    <Button
+                        variant="secondary"
+                        className="ml-auto"
+                        onClick={() => {
+                            BooksContext.setViewType(viewType)
+                        }}
+                    >
                         Save Library Preferences
                         <Save />
                     </Button>
