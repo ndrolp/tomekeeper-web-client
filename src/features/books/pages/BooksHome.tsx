@@ -33,7 +33,7 @@ import {
 import type { GetBooksSortOptions } from '../data/BooksDatasource'
 import { useDebounce } from 'use-debounce'
 import { useSearchParams } from 'react-router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BooksQueries, BooksQueryKeys } from '../queries/BooksQueries'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
@@ -42,15 +42,19 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@radix-ui/react-collapsible'
+import { BookProviderContext } from '../providers/BookProvider'
 
 type ViewTypes = 'grid' | 'list'
 const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ['title', 'series', 'author']
 
 export const BooksHome = () => {
+    const BookProvider = useContext(BookProviderContext)
     const [searchParams, setSearchParams] = useSearchParams()
     const queryClient = useQueryClient()
 
-    const [viewType, setViewType] = useState<ViewTypes>('list')
+    const [viewType, setViewType] = useState<ViewTypes>(
+        BookProvider.orderingAndView.viewType
+    )
     const [searchQuery, setSearchQuery] = useState<string>(
         searchParams.get('query') ?? ''
     )
