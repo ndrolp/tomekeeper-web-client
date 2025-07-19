@@ -13,6 +13,10 @@ import {
     DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu'
 import { DropdownMenuGroup } from '@/components/ui/dropdown-menu'
+import type { Book } from '../types/Book'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { DataSource } from '@/common/data/Datasource'
+import { BooksQueries, BooksQueryKeys } from '../queries/BooksQueries'
 
 export const BookCard = ({
     book,
@@ -27,6 +31,14 @@ export const BookCard = ({
     const viewBook = useCallback(() => {
         navigate('/books/view/' + book?.id)
     }, [book])
+    const queryClient = useQueryClient()
+
+    const { mutate: deleteBook } = useMutation({
+        mutationFn: DataSource.Books.deleteBook,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [BooksQueryKeys.Books] })
+        },
+    })
 
     if (skeleton) {
         return (
@@ -92,6 +104,9 @@ export const BookCard = ({
                                     <Button
                                         variant="ghost"
                                         className="w-full flex justify-start items-start text-start"
+                                        onClick={() => {
+                                            deleteBook(book.id as number)
+                                        }}
                                     >
                                         <Trash />
                                         Delete
