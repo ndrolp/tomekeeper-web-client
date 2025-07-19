@@ -1,10 +1,18 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton' // <- Import Skeleton
-import type { Book } from '../types/Book'
 import { BookCover } from './BookCover'
 import { useNavigate } from 'react-router'
 import { useCallback } from 'react'
+import { Button } from '@/components/ui/button'
+import { BookOpen, EllipsisVertical, Pencil, Trash } from 'lucide-react'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@radix-ui/react-dropdown-menu'
+import { DropdownMenuGroup } from '@/components/ui/dropdown-menu'
 
 export const BookCard = ({
     book,
@@ -48,7 +56,7 @@ export const BookCard = ({
             }}
             tabIndex={tabIndex}
             role="button"
-            className="p-0 gap-0 overflow-hidden cursor-pointer transition-transform transform hover:scale-102 focus:scale-102 outline-primary"
+            className="p-0 gap-0 overflow-hidden cursor-pointer transition-transform transform outline-primary"
         >
             <CardHeader onClick={viewBook} className="p-0 m-0 mb-0 gap-0">
                 <BookCover coverUrl={book.externalCoverUrl} />
@@ -67,6 +75,53 @@ export const BookCard = ({
                         No Leido
                     </Badge>
                     <p className="text-xs text-gray-500">{book.language}</p>
+                </div>
+                <div className="ml-auto">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost">
+                                <EllipsisVertical />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className="z-99 w-56 border bg-background rounded-lg outline-none"
+                            align="start"
+                        >
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild className="flex">
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full flex justify-start items-start text-start"
+                                    >
+                                        <Trash />
+                                        Delete
+                                    </Button>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild className="flex">
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full flex justify-start items-start text-start"
+                                    >
+                                        <Pencil />
+                                        Edit
+                                    </Button>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem asChild className="flex">
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full flex justify-start items-start text-start"
+                                    >
+                                        <BookOpen />
+                                        Read
+                                    </Button>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </CardFooter>
         </Card>

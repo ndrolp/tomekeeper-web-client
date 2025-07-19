@@ -21,6 +21,7 @@ const initialState: BookProviderState = {
     setViewType: () => {},
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const BookProviderContext =
     createContext<BookProviderState>(initialState)
 
