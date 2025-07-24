@@ -43,6 +43,7 @@ import {
     CollapsibleTrigger,
 } from '@radix-ui/react-collapsible'
 import { BookProviderContext } from '../providers/BookProvider'
+import { useTranslation } from 'react-i18next'
 
 type ViewTypes = 'grid' | 'list'
 const ALLOWED_SORT_TYPES: GetBooksSortOptions[] = ['title', 'series', 'author']
@@ -51,6 +52,7 @@ export const BooksHome = () => {
     const BookProvider = useContext(BookProviderContext)
     const [searchParams, setSearchParams] = useSearchParams()
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
 
     const [viewType, setViewType] = useState<ViewTypes>(
         BookProvider.orderingAndView.viewType
@@ -106,7 +108,9 @@ export const BooksHome = () => {
             <div className="w-full  h-full">
                 <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-3 top-0 sticky z-50 bg-background/90 backdrop-blur-2xl px-4 border-b shadow-2xl md:shadow-none">
                     <div className="flex items-center gap-4 w-full mb-1 md:mb-0 pb-3 md:border-none md:pb-0">
-                        <p className="text-xl font-bold">Your Library</p>
+                        <p className="text-xl font-bold">
+                            {t('library.yourlibrary')}
+                        </p>
                         <div className="flex gap-2 ml-auto md:ml-0">
                             <BookForm>
                                 <Button variant="outline">
@@ -160,12 +164,14 @@ export const BooksHome = () => {
                                     <SelectValue placeholder="Sort Order" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="title">Title</SelectItem>
+                                    <SelectItem value="title">
+                                        {t('common.title')}
+                                    </SelectItem>
                                     <SelectItem value="author">
-                                        Author
+                                        {t('common.author')}
                                     </SelectItem>
                                     <SelectItem value="series">
-                                        Series
+                                        {t('common.series')}
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
@@ -201,7 +207,7 @@ export const BooksHome = () => {
                         }}
                         type="search"
                         className="w-full mt-1 md:mt-0 "
-                        placeholder="Filter by title, author, or ISBN..."
+                        placeholder={t('library.filterBy')}
                     />
                 </div>
                 <div className="z-0 px-4">

@@ -5,6 +5,7 @@ import { router } from './router.tsx'
 import { ThemeProvider } from './common/providers/ThemeProvider.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BookProvider } from './features/books/providers/BookProvider.tsx'
+import './translation/i18n.tsx'
 
 const queryClient = new QueryClient()
 
