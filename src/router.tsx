@@ -1,16 +1,16 @@
 import { createBrowserRouter } from 'react-router'
 import { BaseLayout } from './common/layout/BaseLayout'
-import App from './App'
 import { BooksHome } from './features/books/pages/BooksHome'
 import BookPage from './features/books/pages/BookPage'
 import { ConfigPage } from './features/config/pages/ConfigPage'
+import Dashboard from './features/dashboard/pages/Dashboard'
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <BaseLayout />,
         children: [
-            { index: true, element: <App /> },
+            { index: true, element: <Dashboard /> },
             {
                 path: 'books',
                 children: [

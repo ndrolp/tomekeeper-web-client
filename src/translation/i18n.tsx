@@ -4,18 +4,22 @@ import commonEng from './locales/en/common.json'
 import commonEs from './locales/es/common.json'
 import libraryEng from './locales/en/library.json'
 import libraryEs from './locales/es/library.json'
+import dashboardEng from './locales/en/dashboard.json'
+import dashboardEs from './locales/es/dashboard.json'
 
 const resources = {
     en: {
         translation: {
             ...libraryEng,
             ...commonEng,
+            ...dashboardEng,
         },
     },
     es: {
         translation: {
             ...libraryEs,
             ...commonEs,
+            ...dashboardEs,
         },
     },
 }
