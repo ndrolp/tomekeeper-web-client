@@ -16,7 +16,7 @@ import { DropdownMenuGroup } from '@/components/ui/dropdown-menu'
 import type { Book } from '../types/Book'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { DataSource } from '@/common/data/Datasource'
-import { BooksQueries, BooksQueryKeys } from '../queries/BooksQueries'
+import { BooksQueryKeys } from '../queries/BooksQueries'
 
 export const BookCard = ({
     book,

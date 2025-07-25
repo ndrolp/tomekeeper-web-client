@@ -1,6 +1,6 @@
 {
-    "library.yourlibrary": "T\u00fa Librer\u00eda",
-    "library.filterBy": "Filtrar por Autor, Serie, ISBN...",
-    "library.editbook": "Editar Libro",
-    "library.description": "Descripci\u00f3n"
+    "library_yourlibrary": "T\u00fa Librer\u00eda",
+    "library_filterBy": "Filtrar por Autor, Serie, ISBN...",
+    "library_editbook": "Editar Libro",
+    "library_description": "Descripci\u00f3n"
 }

@@ -1,6 +1,6 @@
 {
-    "library.yourlibrary": "Your Library",
-    "library.filterBy": "Filter by Author, Series, ISBN ...",
-    "library.editbook": "Edit Book",
-    "library.description": "Description"
+    "library_yourlibrary": "Your Library",
+    "library_filterBy": "Filter by Author, Series, ISBN ...",
+    "library_editbook": "Edit Book",
+    "library_description": "Description"
 }

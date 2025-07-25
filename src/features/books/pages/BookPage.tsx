@@ -42,7 +42,7 @@ export default function BookPage() {
                     <Button variant="outline">
                         <Edit />
                         <span className="hidden md:block">
-                            {t('library.editbook')}
+                            {t('library_editbook')}
                         </span>
                     </Button>
                 </div>
@@ -75,7 +75,7 @@ export default function BookPage() {
                     <Card className="bg-transparent ">
                         <CardHeader>
                             <CardTitle className="text-xl">
-                                {t('library.description')}
+                                {t('library_description')}
                             </CardTitle>
                             <CardContent className="p-0 mt-3 ">
                                 <div

@@ -109,7 +109,7 @@ export const BooksHome = () => {
                 <div className="mb-3 flex w-full gap-2 flex-wrap lg:flex-nowrap items-center justify-between  py-4 md:py-3 top-0 sticky z-50 bg-background/90 backdrop-blur-2xl px-4 border-b shadow-2xl md:shadow-none">
                     <div className="flex items-center gap-4 w-full mb-1 md:mb-0 pb-3 md:border-none md:pb-0">
                         <p className="text-xl font-bold">
-                            {t('library.yourlibrary')}
+                            {t('library_yourlibrary')}
                         </p>
                         <div className="flex gap-2 ml-auto md:ml-0">
                             <BookForm>
@@ -165,13 +165,13 @@ export const BooksHome = () => {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="title">
-                                        {t('common.title')}
+                                        {t('common_title')}
                                     </SelectItem>
                                     <SelectItem value="author">
-                                        {t('common.author')}
+                                        {t('common_author')}
                                     </SelectItem>
                                     <SelectItem value="series">
-                                        {t('common.series')}
+                                        {t('common_series')}
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
@@ -207,7 +207,7 @@ export const BooksHome = () => {
                         }}
                         type="search"
                         className="w-full mt-1 md:mt-0 "
-                        placeholder={t('library.filterBy')}
+                        placeholder={t('library_filterBy')}
                     />
                 </div>
                 <div className="z-0 px-4">
