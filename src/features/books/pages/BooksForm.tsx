@@ -6,6 +6,7 @@ import { Label } from "@radix-ui/react-label"
 import { ArrowLeft, Book, Library, RotateCcw } from "lucide-react"
 import { useFormStatus } from "react-dom"
 import type { BookCreationDTO } from "../types/Book"
+import { OpenApiDataSource } from "../data/OpenApiDatasource"
 
 function Submit() {
     const status = useFormStatus()
@@ -28,7 +29,12 @@ export const BooksForm = () => {
                 <Button variant="outline"><ArrowLeft /></Button>
                 <h1 className="text-2xl font-bold">Register a book</h1>
                 <div className="flex flex-row gap-2 ml-auto mr-2 w-full md:w-fit">
-                    <Button variant="outline" className="flex-1 md:flex-initial" ><Library /> Use Open Library</Button>
+                    <Button onClick={async () => {
+                        const data = await OpenApiDataSource.searchBooksByTitle({ name: "El imperio final", lang: "es" })
+                        const details = await OpenApiDataSource.getWorkDetails("OL5738148W")
+                        console.log(data)
+                        console.log(details)
+                    }} variant="outline" className="flex-1 md:flex-initial" ><Library /> Use Open Library</Button>
                     <Button variant="outline" className="flex-1 md:flex-initial"><Book />Use Epub</Button>
                     <Button variant="outline" className="flex-1 md:flex-initial"><RotateCcw />Reset</Button>
                 </div>
