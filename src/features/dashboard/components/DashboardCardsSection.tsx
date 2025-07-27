@@ -5,11 +5,12 @@ import { Book, BookOpen, Library, User } from 'lucide-react'
 export const DashboardCardsSection = () => {
     const { t } = useTranslation()
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <DashboardCard
                 title={t('dashboard_totalbooks')}
                 icon={<Book size={20} />}
                 value={1}
+                to='/books'
             />
             <DashboardCard
                 title={t('dashboard_uniquetitles')}

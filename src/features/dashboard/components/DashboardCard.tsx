@@ -1,14 +1,21 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { useNavigate } from 'react-router'
 
 interface DashboardProps {
     title: string
     icon: React.JSX.Element
     value: string | number
+    to?: string | undefined
 }
 
-export const DashboardCard = ({ title, icon, value }: DashboardProps) => {
+export const DashboardCard = ({ title, icon, value, to }: DashboardProps) => {
+    const navigate = useNavigate()
     return (
-        <Card className="bg-background p-5 px-8">
+        <Card
+            onClick={() => {
+                if (to) navigate(to)
+            }}
+            className={`bg-background p-1 px-4 cursor-pointer ${to ? "hover:bg-accent" : ""}`}>
             <CardHeader className="p-0">
                 <div className="flex w-full items-center content-between justify-between">
                     <p className="text-md m-0 text-lg">{title}</p>
