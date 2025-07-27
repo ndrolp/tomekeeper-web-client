@@ -18,7 +18,6 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { BookForm } from '../components/BookForm'
 import { BooksList } from '../components/BooksList'
 import {
     Drawer,
@@ -32,7 +31,7 @@ import {
 } from '@/components/ui/drawer'
 import type { GetBooksSortOptions } from '../data/BooksDatasource'
 import { useDebounce } from 'use-debounce'
-import { useSearchParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { useContext, useEffect, useState } from 'react'
 import { BooksQueries, BooksQueryKeys } from '../queries/BooksQueries'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -53,6 +52,7 @@ export const BooksHome = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const queryClient = useQueryClient()
     const { t } = useTranslation()
+    const navigate = useNavigate()
 
     const [viewType, setViewType] = useState<ViewTypes>(
         BookProvider.orderingAndView.viewType
@@ -112,11 +112,7 @@ export const BooksHome = () => {
                             {t('library_yourlibrary')}
                         </p>
                         <div className="flex gap-2 ml-auto md:ml-0">
-                            <BookForm>
-                                <Button variant="outline">
-                                    <BookPlus />
-                                </Button>
-                            </BookForm>
+                            <Button onClick={() => navigate("/books/create")} variant="outline"><BookPlus /></Button>
                             <Button
                                 onClick={() => {
                                     queryClient.refetchQueries({

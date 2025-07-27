@@ -4,11 +4,11 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "concurrently \"vite --config vite.config.ts\" \"vite build --config ./electron.vite.config.ts --watch\" \"electron ./dist/electron/tomekeeper-ui.cjs\"",
+        "dev": "concurrently \"vite --config vite.config.ts\" \"vite build --config ./electron.vite.config.ts --watch\" \"sleep 1 && electron ./dist/electron/tomekeeper-ui.cjs\"",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "preview": "vite preview",
-        "electron:dev": "ts-node electron --inspect ./electron.ts",
+        "electron:dev": "electron ./dist/electron/tomekeeper-ui.cjs",
         "start": "vite --config vite.config.ts",
         "other": "vite build --config vite.config.ts && vite build --config electron.vite.config.ts"
     },
