@@ -15,7 +15,7 @@ export const DashboardCard = ({ title, icon, value, to }: DashboardProps) => {
             onClick={() => {
                 if (to) navigate(to)
             }}
-            className={`bg-background p-1 px-4 cursor-pointer ${to ? "hover:bg-accent" : ""}`}>
+            className={`bg-background p-1 px-4 ${to ? "cursor-pointer hover:bg-accent" : ""}`}>
             <CardHeader className="p-0">
                 <div className="flex w-full items-center content-between justify-between">
                     <p className="text-md m-0 text-lg">{title}</p>
