@@ -8,3 +8,8 @@ export interface KeyData {
 export interface SearchBookData {
     docs: KeyData[]
 }
+
+export interface WorkData {
+    authors: { key: string; type: string }
+    covers: number[]
+}

@@ -9,49 +9,86 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { DialogDescription } from '@radix-ui/react-dialog'
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { Book, User } from 'lucide-react'
+import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
+import type { SearchBookData, WorkData } from '../types/OpenLibraryTypes'
 
 interface OpeLibrarySearchProps {
     child: React.JSX.Element
+    callback: (element: WorkData) => void
+    open: boolean
 }
 
-export const OpenLibrarySearch = ({ child }: OpeLibrarySearchProps) => {
+export const OpenLibrarySearch = ({
+    child,
+    open = false,
+    callback,
+}: OpeLibrarySearchProps) => {
     const [title, setTitle] = useState('')
     const [debouncedQuery] = useDebounce(title, 300)
+    const [searchData, setSearchData] = useState<SearchBookData | null>(null)
+    const [fetching, setFetching] = useState(false)
+    const [fetchingBookData, setFetchingBookData] = useState(false)
 
-    const {
-        refetch: refetchSearch,
-        data: searchData,
-        isFetching: fetchingSearch,
-    } = useQuery({
-        queryKey: ['open_api_search', debouncedQuery],
-        queryFn: async () =>
-            await DataSource.OpenLibrary.searchBooksByTitle({
-                title: debouncedQuery,
-            }),
-        enabled: false,
-    })
+    const searchBooks = useCallback(async () => {
+        setFetching(true)
+        const data = await DataSource.OpenLibrary.searchBooksByTitle({
+            title: debouncedQuery,
+        })
+        setSearchData(data)
+        setFetching(false)
+    }, [debouncedQuery])
 
+    async function searchBookData(key: string) {
+        setFetchingBookData(true)
+        const data = await DataSource.OpenLibrary.getKeyDetails(
+            key.replace('/works', '')
+        )
+        if (callback) callback(data)
+        setSearchData(null)
+        setTitle('')
+        setFetchingBookData(false)
+    }
 
     return (
         <div>
-            <Dialog>
+            <Dialog open={open}>
                 <DialogTrigger asChild>{child}</DialogTrigger>
                 <DialogContent>
                     <DialogTitle>Open APi</DialogTitle>
-                    {searchData && !fetchingSearch ? (
-                        <div className='flex flex-col gap-2'>
-                            {searchData?.docs?.map((item) => {
-                                const text = `${item.title}${item.author_name ? ` - ${item.author_name.join(" ")}` : ""}`
+                    {searchData ? (
+                        <div className="grid grid-cols-2 gap-2 max-h-80 overflow-auto">
+                            {searchData?.docs?.map((item, index) => {
                                 return (
-                                    <Button variant="outline" className='w-full justify-start'>
-                                        <span className='text-left'>
-                                            {text.slice(0, 60)}{text.length > 60 ? "..." : ""}
-                                        </span>
-                                    </Button>
+                                    <div
+                                        role="button"
+                                        className="border flex p-1 rounded-lg gap-1 flex-col hover:bg-accent cursor-pointer"
+                                        tabIndex={index}
+                                        key={index}
+                                        onClick={() => {
+                                            searchBookData(item.key)
+                                        }}
+                                    >
+                                        <div className="flex gap-2">
+                                            {item.key.startsWith('/work') ? (
+                                                <Book />
+                                            ) : (
+                                                ''
+                                            )}
+                                            <p>{item.title}</p>
+                                        </div>
+                                        <div>
+                                            <div className="flex gap-2">
+                                                <User />
+                                                <p>
+                                                    {item.author_name?.join(
+                                                        ', '
+                                                    ) || ''}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )
                             }) || null}
                         </div>
@@ -66,7 +103,33 @@ export const OpenLibrarySearch = ({ child }: OpeLibrarySearchProps) => {
                         </>
                     )}
                     <DialogFooter>
-                        <Button onClick={() => refetchSearch()}>Search</Button>
+                        <div className="w-full flex items-center">
+                            {fetching || fetchingBookData ? (
+                                <span className="mr-auto text-primary">
+                                    Loading
+                                </span>
+                            ) : null}
+                            {searchData ? (
+                                <Button
+                                    className="ml-auto"
+                                    onClick={() => {
+                                        setSearchData(null)
+                                    }}
+                                    variant="outline"
+                                >
+                                    Cancel
+                                </Button>
+                            ) : (
+                                <Button
+                                    className="ml-auto"
+                                    variant="outline"
+                                    disabled={fetching}
+                                    onClick={() => searchBooks()}
+                                >
+                                    Search
+                                </Button>
+                            )}
+                        </div>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

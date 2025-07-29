@@ -8,6 +8,8 @@ import { useFormStatus } from 'react-dom'
 import type { BookCreationDTO } from '../types/Book'
 import { useNavigate } from 'react-router'
 import { OpenLibrarySearch } from '@/features/openlibrary/components/OpenLibrarySearch'
+import { useState } from 'react'
+import type { WorkData } from '@/features/openlibrary/types/OpenLibraryTypes'
 
 function Submit() {
     const status = useFormStatus()
@@ -20,6 +22,7 @@ function Submit() {
 
 export const BooksForm = () => {
     const navigate = useNavigate()
+    const [searchLibraryOpen, setSearchLibraryOpen] = useState(false)
     async function submit(data: FormData) {
         const formData: BookCreationDTO = {
             title: data.get('bookTitle')?.toString() || '',
@@ -27,6 +30,11 @@ export const BooksForm = () => {
             description: data.get('description')?.toString() || '',
         }
         console.log(formData)
+    }
+
+    function searchOpenLibraryCallback(data: WorkData) {
+        console.log({ data })
+        setSearchLibraryOpen(false)
     }
 
     return (
@@ -38,8 +46,13 @@ export const BooksForm = () => {
                 <h1 className="text-2xl font-bold">Register a book</h1>
                 <div className="flex flex-row gap-2 ml-auto mr-2 w-full md:w-fit">
                     <OpenLibrarySearch
+                        open={searchLibraryOpen}
+                        callback={searchOpenLibraryCallback}
                         child={
                             <Button
+                                onClick={() => {
+                                    setSearchLibraryOpen(true)
+                                }}
                                 variant="outline"
                                 className="flex-1 md:flex-initial"
                             >

@@ -17,7 +17,7 @@ export class OpenLibraryAPIDataSource implements OpenLibraryDataSource {
     }
 
     static async getKeyDetails(key: string): Promise<void> {
-        const data = await api.get(`/openlibrary/works/${key}.json?lang=es`)
+        const data = await api.get(`/openlibrary/keydetails?key=${key}`)
         return data.data
     }
 }

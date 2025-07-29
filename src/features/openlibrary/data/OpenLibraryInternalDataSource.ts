@@ -1,5 +1,6 @@
 import { NOT_IMPLEMENTED_ERROR } from '@/common/types/errors'
 import type { OpenLibraryAPIDataSource } from './OpenLibraryAPIDataSource'
+import type { SearchBookData } from '../types/OpenLibraryTypes'
 
 export class OpenLibraryInternalDataSource implements OpenLibraryAPIDataSource {
     static async searchBooksByTitle({
@@ -8,7 +9,7 @@ export class OpenLibraryInternalDataSource implements OpenLibraryAPIDataSource {
     }: {
         title: string
         lang?: string
-    }): Promise<object> {
+    }): Promise<SearchBookData> {
         void title
         void lang
         throw NOT_IMPLEMENTED_ERROR
