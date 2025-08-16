@@ -230,7 +230,7 @@ export const BookForm = ({ children }: { children: React.ReactNode }) => {
                                                     form.setFieldValue(
                                                         'serie.id',
                                                         value.id?.toString() ??
-                                                            ''
+                                                        ''
                                                     )
                                                 }}
                                                 label="Series Name"

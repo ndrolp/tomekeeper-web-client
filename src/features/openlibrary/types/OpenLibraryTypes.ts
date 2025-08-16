@@ -12,4 +12,8 @@ export interface SearchBookData {
 export interface WorkData {
     authors: { key: string; type: string }
     covers: number[]
+    description: string
+    location: string
+    title: string
+    subjects: string[]
 }

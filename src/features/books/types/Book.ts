@@ -1,42 +1,41 @@
 export interface Book {
-  id?: number;
+    id?: number;
 
-  title: string;
+    title: string;
 
-  author?: string;
+    author?: string;
 
-  genre?: string;
+    genre?: string;
 
-  publicationYear?: number | string;
+    publicationYear?: number | string;
 
-  description?: string;
+    description?: string;
 
-  language?: string;
+    language?: string;
 
-  series?: string;
+    series?: string;
 
-  seriesOrder?: number | string;
+    seriesOrder?: number | string;
 
-  externalCoverUrl?: string;
+    externalCoverUrl?: string;
 }
 
 export interface BookCreationDTO {
-  id?: number;
-  title: string;
-  author?: string;
-  genre?: string;
-  publicationYear?: number;
-  description?: string;
-  language?: string;
-  serie?: {
-    id?: number;
-    name: string;
-    description?: string;
-  };
-  seriesOrder?: number;
+    book: {
+        title: "",
+        genre: "",
+        description: "",
+        externalCoverUrl: "",
+        seriesOrder: ""
+    },
+    serie?: {
+        id?: number;
+        name: string;
+        description?: string;
+    };
 }
 
 export interface BookFilterDTO {
-  authors: string[];
-  genres: string[];
+    authors: string[];
+    genres: string[];
 }
